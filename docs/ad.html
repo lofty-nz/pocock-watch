@@ -1,0 +1,42 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0}
+html,body{width:1280px;height:720px;overflow:hidden;background:#07090f;font-family:"Inter","Noto Sans","DejaVu Sans",sans-serif;color:#eef2f8}
+.bg{position:absolute;inset:0;background:
+ radial-gradient(700px 500px at 78% 40%,rgba(77,210,122,.22),transparent 70%),
+ radial-gradient(600px 420px at 12% 90%,rgba(102,168,255,.20),transparent 70%),
+ radial-gradient(500px 300px at 30% 0%,rgba(250,180,50,.12),transparent 70%),
+ linear-gradient(160deg,#0b0f19,#06070c)}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(circle at 60% 45%,#000 30%,transparent 80%)}
+.left{position:absolute;left:64px;top:70px;width:540px}
+.kicker{display:inline-block;font-size:15px;letter-spacing:.18em;font-weight:700;color:#4dd27a;padding:7px 14px;border:1px solid rgba(77,210,122,.45);border-radius:99px;background:rgba(77,210,122,.08)}
+h1{font-size:64px;line-height:1.02;font-weight:800;margin-top:22px;letter-spacing:-.02em}
+h1 span{background:linear-gradient(90deg,#4dd27a,#9ef0b8 40%,#66a8ff);-webkit-background-clip:text;color:transparent}
+p.sub{font-size:21px;line-height:1.45;color:#aab3c2;margin-top:20px}
+.steps{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px}
+.steps b{font-size:13.5px;font-weight:600;padding:7px 11px;border-radius:8px;background:#151a25;border:1px solid #232a38;color:#cfd6e2}
+.steps b.g{background:rgba(77,210,122,.14);border-color:rgba(77,210,122,.5);color:#9ef0b8}
+.steps b.r{background:rgba(242,92,84,.15);border-color:rgba(242,92,84,.55);color:#ff9a93}
+.steps b.a{background:rgba(250,180,50,.16);border-color:rgba(250,180,50,.6);color:#ffd27a;box-shadow:0 0 18px rgba(250,180,50,.35)}
+.foot{position:absolute;left:64px;bottom:44px;font-size:15px;color:#7d8798}
+.foot em{font-style:normal;color:#cfd6e2;font-weight:600}
+.shot{position:absolute;right:58px;top:92px;width:520px;border-radius:14px;
+ box-shadow:0 0 0 1px rgba(255,255,255,.08),0 30px 80px rgba(0,0,0,.6),0 0 90px rgba(77,210,122,.25);
+ transform:perspective(1400px) rotateY(-9deg) rotateX(3deg)}
+.pill{position:absolute;right:300px;top:560px;width:330px;border-radius:40px;
+ box-shadow:0 0 0 1px rgba(255,255,255,.1),0 16px 40px rgba(0,0,0,.6),0 0 40px rgba(77,210,122,.35);transform:rotate(-3deg)}
+.shine{position:absolute;right:58px;top:92px;width:520px;height:393px;border-radius:14px;pointer-events:none;
+ background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.10) 45%,transparent 55%);transform:perspective(1400px) rotateY(-9deg) rotateX(3deg)}
+</style></head><body>
+<div class="bg"></div><div class="grid"></div>
+<div class="left">
+ <div class="kicker">FOR MATT POCOCK'S SKILLS</div>
+ <h1>Know where<br>every agent<br><span>is at.</span></h1>
+ <p class="sub">An always-on-top desktop badge that follows your Claude Code agents through <b style="color:#eef2f8">/implement</b>, step by step, live.</p>
+ <div class="steps">
+  <b class="g">Read ticket</b><b class="g">Write test</b><b class="r">Test fails</b><b class="g">Write code</b><b class="g">Tests pass</b><b class="a">Review</b><b>Commit</b><b>Ticket done</b><b>Merged</b>
+ </div>
+</div>
+<div class="foot"><em>Pocock Watch</em> · Linux · GTK · reads your Claude Code logs, changes nothing</div>
+<img class="shot" src="badge-open.png"><div class="shine"></div>
+<img class="pill" src="badge-pill.png">
+</body></html>

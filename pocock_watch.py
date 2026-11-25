@@ -81,10 +81,10 @@ def notify(title, body):
 
 
 class Badge(Gtk.Window):
-    def __init__(self):
+    def __init__(self, root=None, settings=None):
         super().__init__(title="Pocock Watch")
-        self.s = load_settings()
-        self.w = watcher.Watcher()
+        self.s = settings or load_settings()
+        self.w = watcher.Watcher(root) if root else watcher.Watcher()
         self.rows = []
         self.counts = {}
         self.repo = None
@@ -115,6 +115,8 @@ class Badge(Gtk.Window):
         self.connect("destroy", Gtk.main_quit)
 
         self.refresh()
+        if self.s.get("render_only"):
+            return
         GLib.timeout_add(int(self.s["refresh_s"] * 1000), self.refresh)
         GLib.timeout_add(120, self.tick)    # gentle pulse on the current step
         self.show_all()
@@ -236,12 +238,23 @@ class Badge(Gtk.Window):
             cr.fill()
 
     def on_draw(self, _w, cr):
+        self.paint(cr, self.get_allocated_width(), self.get_allocated_height())
+
+    def render(self, path, scale=2):
+        """Save the badge as a PNG (for the README); nothing is shown on screen."""
+        W = W_OPEN if self.s["open"] else W_PILL
+        H = self.layout_height()
+        surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W * scale, H * scale)
+        cr = cairo.Context(surf)
+        cr.scale(scale, scale)
+        self.paint(cr, W, H)
+        surf.write_to_png(path)
+
+    def paint(self, cr, W, H):
         cr.set_operator(cairo.OPERATOR_SOURCE)
         cr.set_source_rgba(0, 0, 0, 0)
         cr.paint()
         cr.set_operator(cairo.OPERATOR_OVER)
-        W = self.get_allocated_width()
-        H = self.get_allocated_height()
         cr.set_source_rgba(*BG)
         rrect(cr, 0.5, 0.5, W - 1, H - 1, 12 if self.s["open"] else H / 2)
         cr.fill()
@@ -406,5 +419,19 @@ class Badge(Gtk.Window):
 
 
 if __name__ == "__main__":
-    Badge()
-    Gtk.main()
+    import argparse
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--demo", action="store_true", help="show made-up agents instead of your real sessions")
+    ap.add_argument("--render", metavar="PREFIX", help="save open + pill PNGs (PREFIX-open.png, PREFIX-pill.png) and exit")
+    a = ap.parse_args()
+    root = None
+    if a.demo or a.render:
+        import demo
+        root = demo.build()
+    if a.render:
+        for opened in (True, False):
+            st = dict(DEFAULTS, open=opened, notify=False, render_only=True)
+            Badge(root, st).render(f"{a.render}-{'open' if opened else 'pill'}.png")
+    else:
+        Badge(root, dict(load_settings(), notify=False) if a.demo else None)
+        Gtk.main()
